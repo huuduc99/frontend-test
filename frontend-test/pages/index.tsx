@@ -1,10 +1,129 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Navbar from '../components/Navbar'
-import { AuthProvider } from '../context/AuthContext'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { Button, Image, Progress } from "antd";
+import Navbar from "../components/Navbar";
+import { AuthProvider } from "../context/AuthContext";
+import styles from "../styles/Home.module.css";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function Home() {
+  const options = {
+    responsive: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: false,
+      },
+    },
+  };
+
+  const labels = [
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+  ];
+
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: labels.map(() => Math.random()),
+        borderColor: "#8FE9D0",
+        backgroundColor: "#8FE9D0",
+      },
+      {
+        label: "Dataset 2",
+        data: labels.map(() => Math.random()),
+        borderColor: "#FFCC21",
+        backgroundColor: "#FFCC21",
+      },
+    ],
+  };
+
+  const contentMenu = [
+    {
+      title: 'Morning',
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+    },
+    {
+      title: 'Lunch',
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+    },
+    {
+      title: 'Dinner',
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+    },
+    {
+      title: 'Snack',
+      icon: <Image src="/static/images/icon_cup.png" width={56} height={56} preview={false} />
+    },
+  ]
+
+  const gallery = [
+    {
+      label: '05.21.Morning',
+      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.21.Lunch',
+      image: <Image src="/static/images/l03.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.21.Dinner',
+      image: <Image src="/static/images/d01.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.21.Snack',
+      image: <Image src="/static/images/l01.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.20.Morning',
+      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.20.Lunch',
+      image: <Image src="/static/images/l02.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.20.Dinner',
+      image: <Image src="/static/images/d02.jpg" width="100%" height="100%" preview={false} />
+    },
+    {
+      label: '05.21.Snack',
+      image: <Image src="/static/images/s01.jpg" width="100%" height="100%" preview={false} />
+    },
+  ]
+
   return (
     <div>
       <Head>
@@ -16,12 +135,92 @@ export default function Home() {
       <main>
         <AuthProvider>
           <Navbar />
-          <Image src="/static/images/column-1.jpg" alt="Vercel Logo" width={80} height={80} />
+
+          <div className="grid grid-cols-3 mt-[64px]">
+            <div className="col-span-1 relative h-[316px] bg-[url('/static/images/d01.jpg')]">
+              <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+                <Progress
+                  type="circle"
+                  percent={75}
+                  className="z-10"
+                  trailColor="#ffffff00"
+                  strokeColor="#ffffff"
+                  width={150}
+                  format={(percent) => {
+                    return (
+                      <p className="text-white text-lg">
+                        05/12{" "}
+                        <span className="text-white text-3xl">{percent}%</span>
+                      </p>
+                    );
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-span-2 bg-[#2E2E2E] max-h-[316px]">
+              <div className="w-[90%] mx-auto text-white pt-[4px] flex justify-center items-center">
+                <Line
+                  options={options}
+                  data={chartData}
+                  style={{ height: "308px", width: "90%" }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-[80%] mx-auto py-[55px]">
+            <div className="grid grid-cols-4 gap-4">
+              {contentMenu.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="relative flex flex-row justify-center items-center"
+                  >
+                    <Image
+                      src="/static/images/hexagon.png"
+                      width={134}
+                      height={134}
+                      preview={false}
+                    />
+                    <div className="flex flex-col justify-center items-center absolute">
+                      {item.icon}
+                      <p className={`mb-0 text-white text-2xl`}>{item.title}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 mt-[25px]">
+              {gallery.map((item, index) => {
+                return (
+                  <div key={index} className="relative">
+                    {item.image}
+
+                    <p className="bg-light-orange text-white text-center px-[8px] py-[7px] absolute bottom-0 left-0">
+                      {item.label}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-center items-center mb-[64px]">
+              <Button
+                className="text-white mt-[28px] w-[296px] h-[56px] border-0"
+                style={{
+                  background:
+                    "linear-gradient(32.95deg, #FFCC21 8.75%, #FF963C 86.64%)",
+                }}
+              >
+                記録をもっと見る
+              </Button>
+            </div>
+          </div>
         </AuthProvider>
       </main>
 
-      <footer className={styles.footer}>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
-  )
+  );
 }

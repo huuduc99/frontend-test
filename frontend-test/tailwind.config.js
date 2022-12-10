@@ -8,7 +8,9 @@ module.exports = {
     extend: {
       colors: {
         'dark-gray': '#414141',
-        'primary-color': '#EA6C00'
+        'primary-color': '#EA6C00',
+        'light-orange': '#FFCC21',
+        'normal-orange': '#FF963C',
       }
     },
     fontSize: {
@@ -19,6 +21,9 @@ module.exports = {
       'xl': '20px',
       '2xl': '22px',
       '3xl': '25px'
+    },
+    backgroundImage: {
+      'achievement-rate': "url('/static/images/d01.png')"
     }
   },
   plugins: [],
