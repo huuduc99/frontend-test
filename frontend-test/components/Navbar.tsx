@@ -9,6 +9,8 @@ function Navbar() {
     setCurrent(e.key);
   };
 
+  const [openMenu, setOpenMenu] = useState(false);
+
   const items = [
     {
       label: "自分の記録",
@@ -52,19 +54,34 @@ function Navbar() {
         </div>
       ),
     },
-    {
-      label: "",
-      url: "",
-      icon: (
-          <Image
-            src="/static/images/icon_menu.png"
-            alt="App Logo"
-            width={32}
-            height={32}
-          />
-      ),
-    },
   ];
+
+  const menuItem = [
+    {
+      title: '自分の記録',
+      url: ''
+    },
+    {
+      title: '体重グラフ',
+      url: ''
+    },
+    {
+      title: '目標',
+      url: ''
+    },
+    {
+      title: '選択中のコース',
+      url: ''
+    },
+    {
+      title: 'コラム一覧',
+      url: ''
+    },
+    {
+      title: '設定',
+      url: ''
+    },
+  ]
 
   return (
     <div className="bg-[#414141] fixed inset-x-0 top-0 z-50">
@@ -86,11 +103,11 @@ function Navbar() {
           <ul className="flex flex-row">
             {items.map((item, index) => {
               return (
-                <li key={index} className="">
+                <li key={index} className="flex flex-row items-center">
                   <Link href={item.url || ""}>
-                    <a className="flex flex-row justify-center items-center px-[16px] py-[12px]">
+                    <a className="flex flex-row justify-center items-center px-[16px] py-[12px] h-full">
                       {item.icon}
-                      <p className="ml-[8px] mb-0 text-white text-md">
+                      <p className="ml-[8px] mb-0 text-white text-md font-hiragino">
                         {item.label}
                       </p>
                     </a>
@@ -98,6 +115,38 @@ function Navbar() {
                 </li>
               );
             })}
+
+            <li
+              className="flex flex-row items-center relative"
+              onClick={() => setOpenMenu(!openMenu)}
+            >
+              <a className="flex flex-row justify-center items-center px-[16px] py-[12px] h-full">
+                <Image
+                  src={
+                    !openMenu
+                      ? "/static/images/icon_menu.png"
+                      : "/static/images/icon_close.png"
+                  }
+                  alt="App Logo"
+                  width={32}
+                  height={32}
+                />
+              </a>
+
+              <div className={`${openMenu ? 'block' : 'hidden'} absolute bg-gray-color w-[280px] top-[64px] -left-[230px] z-50`}>
+                <ul className="">
+                  {menuItem.map((item, index) => (
+                    <li key={index} className="hover:bg-dark-gray">
+                      <Link href={item.url}>
+                        <a className="block text-white font-hiragino text-lg py-[23px] px-[32px] border-b-[1px] border-[#00000020]">
+                          {item.title}
+                        </a>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

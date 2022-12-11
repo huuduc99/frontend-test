@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Hiragino';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''), url('/static/fonts/Hiragino Kaku Gothic ProN W3.otf') format('otf');
+}

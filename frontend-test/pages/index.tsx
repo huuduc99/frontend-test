@@ -1,28 +1,10 @@
 import Head from "next/head";
-import { Button, Image, Progress } from "antd";
+import { Button, FloatButton, Image, Progress } from "antd";
 import Navbar from "../components/Navbar";
 import { AuthProvider } from "../context/AuthContext";
-import styles from "../styles/Home.module.css";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import Footer from "../components/Footer";
+import Link from "next/link";
+import ChartData from "../components/ChartData";
 
 export default function Home() {
   const options = {
@@ -73,54 +55,66 @@ export default function Home() {
   const contentMenu = [
     {
       title: 'Morning',
-      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />,
+      url: ''
     },
     {
       title: 'Lunch',
-      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />,
+      url: ''
     },
     {
       title: 'Dinner',
-      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />
+      icon: <Image src="/static/images/icon_knife.png" width={56} height={56} preview={false} />,
+      url: ''
     },
     {
       title: 'Snack',
-      icon: <Image src="/static/images/icon_cup.png" width={56} height={56} preview={false} />
+      icon: <Image src="/static/images/icon_cup.png" width={56} height={56} preview={false} />,
+      url: ''
     },
   ]
 
   const gallery = [
     {
       label: '05.21.Morning',
-      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.21.Lunch',
-      image: <Image src="/static/images/l03.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/l03.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.21.Dinner',
-      image: <Image src="/static/images/d01.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/d01.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.21.Snack',
-      image: <Image src="/static/images/l01.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/l01.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.20.Morning',
-      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/m01.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.20.Lunch',
-      image: <Image src="/static/images/l02.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/l02.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.20.Dinner',
-      image: <Image src="/static/images/d02.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/d02.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
     {
       label: '05.21.Snack',
-      image: <Image src="/static/images/s01.jpg" width="100%" height="100%" preview={false} />
+      image: <Image src="/static/images/s01.jpg" width="100%" height="100%" preview={false} />,
+      url: ''
     },
   ]
 
@@ -132,11 +126,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Navbar />
+
       <main>
         <AuthProvider>
-          <Navbar />
-
-          <div className="grid grid-cols-3 mt-[64px]">
+          <section className="grid grid-cols-3 mt-[64px]">
             <div className="col-span-1 relative h-[316px] bg-[url('/static/images/d01.jpg')]">
               <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
                 <Progress
@@ -159,17 +153,17 @@ export default function Home() {
             </div>
             <div className="col-span-2 bg-[#2E2E2E] max-h-[316px]">
               <div className="w-[90%] mx-auto text-white pt-[4px] flex justify-center items-center">
-                <Line
+                <ChartData
                   options={options}
-                  data={chartData}
-                  style={{ height: "308px", width: "90%" }}
+                  chartData={chartData}
+                  styles={{ height: "308px", width: "90%" }}
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="w-[80%] mx-auto py-[55px]">
-            <div className="grid grid-cols-4 gap-4">
+          <section className="w-[80%] mx-auto py-[55px]">
+            <section className="grid grid-cols-4 gap-4">
               {contentMenu.map((item, index) => {
                 return (
                   <div
@@ -182,45 +176,52 @@ export default function Home() {
                       height={134}
                       preview={false}
                     />
-                    <div className="flex flex-col justify-center items-center absolute">
-                      {item.icon}
-                      <p className={`mb-0 text-white text-2xl`}>{item.title}</p>
-                    </div>
+                    <Link href={item.url}>
+                      <a className="flex flex-col justify-center items-center absolute">
+                        {item.icon}
+                        <p className={`mb-0 text-white text-2xl`}>{item.title}</p>
+                      </a>
+                    </Link>
                   </div>
                 );
               })}
-            </div>
+            </section>
 
-            <div className="grid grid-cols-4 gap-4 mt-[25px]">
+            <section className="grid grid-cols-4 gap-4 mt-[25px]">
               {gallery.map((item, index) => {
                 return (
                   <div key={index} className="relative">
                     {item.image}
-
-                    <p className="bg-light-orange text-white text-center px-[8px] py-[7px] absolute bottom-0 left-0">
-                      {item.label}
-                    </p>
+                    <Link href={item.url}>
+                      <a className="block bg-light-orange text-white text-center px-[8px] py-[7px] absolute bottom-0 left-0">
+                        {item.label}
+                      </a>
+                    </Link>
                   </div>
                 );
               })}
-            </div>
+            </section>
 
-            <div className="flex justify-center items-center mb-[64px]">
-              <Button
-                className="text-white mt-[28px] w-[296px] h-[56px] border-0"
-                style={{
-                  background:
-                    "linear-gradient(32.95deg, #FFCC21 8.75%, #FF963C 86.64%)",
-                }}
-              >
-                記録をもっと見る
-              </Button>
-            </div>
-          </div>
+            <section className="flex justify-center items-center mb-[64px]">
+              <Link href='/records'>
+                <Button
+                  className="text-white mt-[28px] w-[296px] h-[56px] border-0 text-lg font-hiragino"
+                  style={{
+                    background:
+                      "linear-gradient(32.95deg, #FFCC21 8.75%, #FF963C 86.64%)",
+                  }}
+                >
+                  記録をもっと見る
+                </Button>
+              </Link>
+            </section>
+          </section>
         </AuthProvider>
+
+        <FloatButton.BackTop />
       </main>
 
-      <footer className={styles.footer}></footer>
+      <Footer />
     </div>
   );
 }

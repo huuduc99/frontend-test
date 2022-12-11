@@ -14,7 +14,11 @@ export const AuthProvider = ({ children }: Props) => {
   }, []);
 
   const checkAuthorization = async () => {
-    const response = await authService.checkAuthorization('admin');
+    const user = localStorage.getItem('user');
+
+    if (!!!user) {
+      window.location.replace('/login');
+    }
   }
 
   return (
